@@ -6,7 +6,10 @@ use MVC\Router;
 
 class AppController {
     public static function index(Router $router){
-        $router->render('pages/index', []);
+       $cualquiera = 10;
+        $router->render('inicio/index', [
+            "cualquiera"=>$cualquiera,
+        ]);
     }
 
 }

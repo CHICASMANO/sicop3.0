@@ -1,6 +1,6 @@
 {
-    "name": "mindef/demo",
-    "description": "Proyecto MVC demo",
+    "name": "mindef/sicop3.0",
+    "description": "Migración del SICOP a la estandarización del equipo de desarrolladores del CIT 2023 (k-1484)",
     "type": "project",
     "config": {
         "platform-check": false

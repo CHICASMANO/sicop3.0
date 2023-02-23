@@ -1,7 +1,7 @@
 {
-  "name": "demo-app",
-  "version": "1.0.0",
-  "description": "Aplicacion MVC demo",
+  "name": "sicop3.0",
+  "version": "3.0.0",
+  "description": "Migración del SICOP a la estandarización del equipo de desarrolladores del CIT 2023 (k-1484)",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
