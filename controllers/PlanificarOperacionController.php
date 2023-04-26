@@ -8,7 +8,8 @@ use Model\PlanificarOperacion;
  class PlanificarOperacionController{
 
     public static function index(Router $router){
-        $dep_cod = 2940;
+        // hasPermission(['SICOP_ADMIIN']);
+        $dep_cod = $_SESSION['dep_llave'];
         $orden_ope = PlanificarOperacion::fetchArray("SELECT * FROM coc_ordenes, coc_dep_orden 
                                                     WHERE dep_ord_dependencia = $dep_cod
                                                     AND  ord_codigo = dep_ord_orden
@@ -48,6 +49,7 @@ use Model\PlanificarOperacion;
 
     public static function APIcomboOpes(){
         getHeadersApi();
+        // hasPermissionApi(['NOMBRE_PERRMISO']);
         $valor= ($_POST);
         //echo json_encode($valor);
         //exit;
