@@ -28,3 +28,12 @@ export const Toast = Swal.mixin({
       toast.addEventListener('mouseleave', Swal.resumeTimer)
     }
 })
+
+export const ocultarLoader = () => {
+    loader.style.visibility = 'hidden';
+    loader.style.opacity = 0;
+  }
+export const mostrarLoader = () => {
+loader.style.visibility = 'visible';
+loader.style.opacity = 1;
+}
