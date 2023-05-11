@@ -18,9 +18,12 @@ const inputNombre = document.getElementById('persona');
 const agregIns = document.getElementById('agregIns');
 let catalogoValido = false;
 const agregar_ins = document.getElementById('agregar_ins');
+const agregar_veh = document.getElementById('agregar_veh');
 const quitar_ins = document.getElementById('quitar_ins');
+const quitar_veh = document.getElementById('quitar_veh');
 const agregar_Coords = document.getElementById('agregarUbi');
 const divs_institucion = document.getElementById('prueba2');
+const divs_vehiculo_new= document.getElementById('vehiculo_new');
 const divsCoord = document.getElementById('divsCoord');
 //const modalElement = document.getElementById('modalMapaRep')
 //const mapa = new Modal(modalElement);
@@ -133,6 +136,68 @@ const limpiar3 = () => {
 
   }
   
+
+  let acumuladorVeh = 0
+
+  const agregarVehiculo= async (evento) => {
+
+    evento && evento.preventDefault();
+    acumuladorVeh++;
+
+
+  
+    //query para mandar a traer info de instituciones participantes
+
+    try {
+      const url = `/sicop3.0/API/planificar/buscar_veh`
+      const headers = new Headers();
+      headers.append("X-Requested-With", "fetch");
+  
+      const config = {
+          method: 'GET',
+          headers
+      }
+
+      const respuesta = await fetch(url, config);
+      const data = await respuesta.json();
+
+        //crea el select
+            const fragment = document.createDocumentFragment();
+
+            const select_Veh = document.createElement('select')
+            select_Veh.id = "vehiculos[]"
+            select_Veh.classList.add("form-control")
+  
+            const option_Veh = document.createElement('option')
+            option_Veh.value = ""
+            option_Veh.innerText = "Seleccione Vehículo(s) Empeñado(s)"
+            select_Veh.appendChild(option_Veh)
+
+            data.forEach(e =>{
+              const option_Vehtitucion = document.createElement('option')
+              option_Vehtitucion.value = e.car_catalogo_vehiculo
+              option_Vehtitucion.style = "font-weight:bold"
+              option_Vehtitucion.innerText = `${e.car_catalogo_vehiculo} `+'-'+`${e.tve_desc} `+' ('+`${e.est_descripcion} `+')'
+              select_Veh.appendChild(option_Vehtitucion)
+            })
+            
+            fragment.appendChild(select_Veh)
+  
+            //document.getElementById("prueba2").appendChild(fragment)
+            divs_vehiculo_new.appendChild(fragment)
+      //finaliza el select
+
+    } catch (error) {
+
+    }
+    
+  //finaliza query
+    
+
+
+
+  }
+  
   
   const quitarInstitucion = async (evento) => {
 
@@ -159,6 +224,30 @@ const limpiar3 = () => {
   }
 
 
+  
+  const quitarVeh = async (evento) => {
+
+    evento && evento.preventDefault();
+
+
+        //borra el select
+        if (acumuladorVeh > 0) {
+            divs_vehiculo_new.removeChild(divs_vehiculo_new.lastElementChild);
+            acumuladorVeh--;
+  
+        } else {
+            Toast.fire({
+                icon: 'warning',
+                title: 'No puede realizar esta acción'
+            });
+        }
+      //finaliza borrar el select
+
+
+
+
+
+  }
 
 const BuscarOpes_de_Areas= async (evento) => {
    evento && evento.preventDefault();
@@ -444,6 +533,10 @@ agregar_ins.addEventListener('click', agregarInstitucion)
 quitar_ins.addEventListener('click', quitarInstitucion)
 //levantarMapa.addEventListener('click', abrirmapa)
 inputCatalogo.addEventListener('input', buscarCatalogo);
+agregar_veh.addEventListener('click', agregarVehiculo)
+quitar_veh.addEventListener('click', quitarVeh)
+formPlanificarOpe.addEventListener('submit', guardarOpe )
+
 //document.getElementById('departamentos').addEventListener('change', BuscarMunicipios)
 //document.getElementById('municipio').addEventListener('change', BuscarLugar)
 //document.getElementById('selectCoorde').addEventListener('click', ElegirUbi)
