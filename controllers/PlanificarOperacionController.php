@@ -32,7 +32,22 @@ use Model\PlanificarOperacion;
                                                     WHERE ins_situacion = 1 ORDER by inst_codigo ASC");
 
         $departamento = PlanificarOperacion::fetchArray("SELECT * from coc_departamentos
-                                            WHERE dep_situacion = 1 ORDER by dep_codigo ASC");
+                                                    WHERE dep_situacion = 1 ORDER by dep_codigo ASC");
+
+        $con_dep_llave = PlanificarOperacion::fetchArray("SELECT con_dep_llave FROM con_mdep 
+                                                    WHERE con_mdep = $dep_cod");
+                                                    
+        $cod_dep = $con_dep_llave[0]['con_dep_llave'];
+        
+        $vehiculos_Asign = PlanificarOperacion::fetchArray("SELECT * FROM vlh_caract_vehiculos, con_mdep, vlh_t_vehiculo, vlh_estado_vehiculo  
+                                                    WHERE car_dependencia = con_dep_llave 
+                                                    AND car_dependencia = $cod_dep 
+                                                    AND car_t_vehiculo = tve_id 
+                                                    AND car_estado_vehiculo = est_id_estado 
+                                                    AND car_vehi_situacion IN (1,2) 
+                                                    AND car_estado_vehiculo IN (1,2) 
+                                                    AND car_ubicacion_vehiculo = $cod_dep");
+
 
 
         $router->render('planificar/index', [
@@ -43,6 +58,7 @@ use Model\PlanificarOperacion;
             'uni_org' => $uni_org,
             'instituciones' => $instituciones,
             'departamento' => $departamento,
+            'vehiculos_Asign' => $vehiculos_Asign,
             
         ]);
     }
@@ -163,6 +179,45 @@ use Model\PlanificarOperacion;
      
             $data = PlanificarOperacion::fetchArray("SELECT * from coc_instituciones 
                                                     WHERE ins_situacion = 1 ORDER by inst_codigo ASC");
+            
+            echo json_encode($data);
+         
+        
+        } catch (Exception $e) {
+            echo json_encode([
+                "detalle" => $e->getMessage(),
+                "mensaje" => "ocurrio un error en base de datoss",
+        
+                "codigo" => 4,
+            ]);
+        }
+    }
+
+
+
+    
+    public static function APIVehiculos(){
+        getHeadersApi();
+        try {
+            
+            $dep_cod = $_SESSION['dep_llave'];
+     
+            $con_dep_llave = PlanificarOperacion::fetchArray("SELECT con_dep_llave FROM con_mdep 
+            WHERE con_mdep = $dep_cod");
+            
+            $cod_dep = $con_dep_llave[0]['con_dep_llave'];
+
+            $data = PlanificarOperacion::fetchArray("SELECT * FROM vlh_caract_vehiculos, con_mdep, vlh_t_vehiculo, vlh_estado_vehiculo  
+                        WHERE car_dependencia = con_dep_llave 
+                        -- AND car_dependencia = $cod_dep 
+                        AND car_t_vehiculo = tve_id 
+                        AND car_estado_vehiculo = est_id_estado 
+                        AND car_vehi_situacion IN (1,2) 
+                        AND car_estado_vehiculo IN (1,2) 
+                        AND car_ubicacion_vehiculo = $cod_dep");
+
+           // $data = PlanificarOperacion::fetchArray("SELECT * from coc_instituciones 
+                                                   // WHERE ins_situacion = 1 ORDER by inst_codigo ASC");
             
             echo json_encode($data);
          

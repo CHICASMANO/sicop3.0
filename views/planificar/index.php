@@ -128,11 +128,11 @@
 
 
         </div>
-    </form>
+    <!-- </form> -->
 
     <div class="row"><br></div>
 
-    <form id="formPlanificarOpe2" class="col-lg-9 border rounded bg-light p-3">
+    <!-- <form id="formPlanificarOpe2" class="col-lg-9 border rounded bg-light p-3"> -->
         <div class="row">
             <center>
                 <div class="col-sm-4">
@@ -266,9 +266,9 @@
             <div class="col-sm-4"></div>
 
         </div>
-    </form>
+    <!-- </form> -->
     <div class="row"><br></div>
-    <form id="formPlanificarOpePRUEBA" class="col-lg-9 border rounded bg-light p-3">
+    <!-- <form id="formPlanificarOpePRUEBA" class="col-lg-9 border rounded bg-light p-3"> -->
         <div class="row">
             <center>
                 <div class="col-sm-4">
@@ -296,15 +296,23 @@
                         <select class="form-control" name="vehiculos" id="vehiculos">
                             <option value="">Seleccione Vehículo(s) Empeñado(s)</option>
 
-                            <?php foreach ($instituciones as $row) : ?>
+                            <?php foreach ($vehiculos_Asign as $row) : ?>
 
-                                <option style="font-weight:bold" value="<?= $row['inst_codigo'] ?>"><?= utf8_decode($row['inst_descripcion']) ?> (<?= utf8_decode($row['inst_observacion']) ?>)</option>
+                                <option style="font-weight:bold" value="<?= $row['car_catalogo_vehiculo'] ?>"><?= utf8_decode($row['car_catalogo_vehiculo']) ?>-<?= utf8_decode($row['tve_desc']) ?> (<?= utf8_decode($row['est_descripcion']) ?>)</option>
                             <?php endforeach ?>
                         </select>
                     </div>
                     <div class="col-sm-1"></div>
                 </div>
-
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                        <div id="vehiculo_new">
+                            <!-- aqui ingresan el select de vehiculos -->
+                        </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
 
                 <br>
                 <div class="row">
@@ -370,12 +378,12 @@
                 </div>
             </div>
         </div>
-    </form>
+    <!-- </form> -->
 
 
     <div class="row"><br></div>
 
-    <form id="formPlanificarOpe4" class="col-lg-9 border rounded bg-light p-3">
+    <!-- <form id="formPlanificarOpe4" class="col-lg-9 border rounded bg-light p-3"> -->
         <div class="row">
             <center>
                 <div class="col-sm-4">
@@ -448,10 +456,10 @@
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-2">
-                <button id="guardarOperacion" type="button" class="btn btn-outline-success w-100"><b>GUARDAR</b></button>
+                <button id="guardarOperacion" type="submit" class="btn btn-outline-success w-100"><b>GUARDAR</b></button>
             </div>
             <div class="col-sm-2">
-                <button id="limpiar" type="button" class="btn btn-outline-warning w-100"><b>LIMPIAR</b></button>
+                <button id="limpiar" type="button" class="btn btn-outline-warning w-100"><b>LIMPIAR </b></button>
             </div>
             <div class="col-sm-4"></div>
         </div>
